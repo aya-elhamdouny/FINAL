@@ -12,17 +12,19 @@ import com.example.afinal.R
 import com.example.afinal.models.Movie
 import com.google.android.material.imageview.ShapeableImageView
 
+
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
 
-
-    inner class MovieViewHolder(itemView : View): RecyclerView.ViewHolder(itemView)
+    private lateinit var movies : List<Movie>
+    inner class MovieViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.movie_item , parent , false))
+            LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        )
     }
 
 
@@ -37,11 +39,17 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     }
 
-    val differ = AsyncListDiffer(this , differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+
+
+
+
+
+        override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = differ.currentList[position]
         holder.itemView.apply {
+
             val poster: ShapeableImageView = findViewById(R.id.movie_poster)
             Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w342${movie.poster}")
@@ -58,7 +66,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
 
     private var onItemClickListener : ((Movie) -> Unit)? = null
-    fun setOnClickListener(listener: ((Movie)-> Unit)){
+    fun setOnClickListener(listener: ((Movie) -> Unit)){
         onItemClickListener = listener
     }
 

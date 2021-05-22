@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.afinal.R
 import com.example.afinal.Util.Resource
 import com.example.afinal.adapter.MovieAdapter
+import com.example.afinal.models.MovieResponse
 import com.example.afinal.ui.MainActivity
 import com.example.afinal.ui.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movie.*
@@ -33,7 +34,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
-                        madapter.differ.submitList(movieResponse)
+                        madapter.differ.submitList(movieResponse.movie)
                     }
                 }
                 is Resource.Error -> {

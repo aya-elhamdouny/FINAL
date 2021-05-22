@@ -10,7 +10,7 @@ interface MovieDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movie : Movie) : String
+    suspend fun insert(movie : Movie)
 
     @Query("select * from Movie")
     fun getMovies() : LiveData<List<Movie>>

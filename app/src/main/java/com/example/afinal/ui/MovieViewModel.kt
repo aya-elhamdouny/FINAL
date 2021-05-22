@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.afinal.Util.Resource
+import com.example.afinal.models.Movie
 import com.example.afinal.models.MovieResponse
 import com.example.afinal.reprository.MovieRepository
 import kotlinx.coroutines.launch
@@ -54,7 +55,6 @@ class MovieViewModel(
         }
         return Resource.Error(response.message())
     }
-
 
 }
 
