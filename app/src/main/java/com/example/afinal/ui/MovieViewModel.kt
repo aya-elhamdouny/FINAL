@@ -15,17 +15,21 @@ class MovieViewModel(
 
 ) : ViewModel() {
 
-    val popularMovies: MutableLiveData<Resource<MovieResponse>> = MutableLiveData()
-    val topRatedMovies: MutableLiveData<Resource<MovieResponse>> = MutableLiveData()
-    val upComingMovies: MutableLiveData<Resource<MovieResponse>> = MutableLiveData()
+    val popularMovies: MutableLiveData<Resource<MovieResponse>> by lazy {
+        MutableLiveData<Resource<MovieResponse>>().also {     getPopularMovie() }
+    }
+
+    val topRatedMovies: MutableLiveData<Resource<MovieResponse>> by lazy {
+        MutableLiveData<Resource<MovieResponse>>().also  {     getTopRatedMovie()
+    }
+    }
+    val upComingMovies: MutableLiveData<Resource<MovieResponse>> by lazy {
+        MutableLiveData<Resource<MovieResponse>>().also {    getUpComingMovie() }
+    }
+
 
     var pageNum = 1
 
-    init {
-        getPopularMovie()
-        getUpComingMovie()
-        getTopRatedMovie()
-    }
 
     fun getPopularMovie() = viewModelScope.launch {
         popularMovies.postValue(Resource.Loading())

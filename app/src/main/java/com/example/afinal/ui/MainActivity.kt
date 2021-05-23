@@ -1,10 +1,9 @@
 package com.example.afinal.ui
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.afinal.R
 import com.example.afinal.database.MovieDatabase
@@ -12,7 +11,7 @@ import com.example.afinal.reprository.MovieRepository
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var viewModel: MovieViewModel
+   lateinit var   viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +25,6 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-    
+
 
 }

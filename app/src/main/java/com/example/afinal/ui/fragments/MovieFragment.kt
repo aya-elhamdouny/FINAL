@@ -1,14 +1,10 @@
 package com.example.afinal.ui.fragments
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Adapter
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +12,6 @@ import com.example.afinal.R
 import com.example.afinal.Util.Resource
 import com.example.afinal.adapter.MovieAdapter
 import com.example.afinal.database.MovieDatabase
-import com.example.afinal.models.MovieResponse
 import com.example.afinal.reprository.MovieRepository
 import com.example.afinal.ui.MainActivity
 import com.example.afinal.ui.MovieViewModel
@@ -26,14 +21,19 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 
 class MovieFragment : Fragment(R.layout.fragment_movie) {
 
-    lateinit var  viewModel : MovieViewModel
+    lateinit var viewModel: MovieViewModel
     lateinit var madapter: MovieAdapter
     val TAG = "error"
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel =  (activity as MainActivity).viewModel
+
+        val movieRepository = MovieRepository(MovieDatabase.getDatabase(requireContext()))
+        val viewModelProviderFactory = movieViewModelProviderFactory(movieRepository)
+        viewModel = ViewModelProvider(MainActivity() , viewModelProviderFactory).get( MovieViewModel::class.java)
+              //viewModel = (activity as MainActivity).viewModel
+
 
         setPopularMovieRecyclerView()
         settopRatedMovieRecyclerView()

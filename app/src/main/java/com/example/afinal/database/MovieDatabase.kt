@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.afinal.models.Movie
+import com.example.afinal.ui.fragments.MovieFragment
 
 
 @Database(entities = [Movie::class] , version = 1)
