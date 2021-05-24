@@ -9,7 +9,12 @@
         android:id="@+id/detailFragment"
         android:name="com.example.afinal.ui.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+
+        <argument
+            android:name="Movie"
+            app:argType="com.example.afinal.models.Movie" />
+    </fragment>
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.example.afinal.ui.fragments.MovieFragment"

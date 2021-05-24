@@ -40,11 +40,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     val differ = AsyncListDiffer(this, differCallback)
-
-
-
-
-
+    private var onItemClickListener : ((Movie) -> Unit)? = null
 
         override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = differ.currentList[position]
@@ -55,7 +51,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 .load("https://image.tmdb.org/t/p/w342${movie.poster}")
                 .transform(CenterCrop())
                 .into(poster)
-            setOnClickListener{
+            setOnClickListener {
                 onItemClickListener?.let {
                     it(movie)
                 }
@@ -64,9 +60,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         }
     }
 
-
-    private var onItemClickListener : ((Movie) -> Unit)? = null
-    fun setOnClickListener(listener: ((Movie) -> Unit)){
+    fun setOnItemClickListener(listener: ((Movie) -> Unit)){
         onItemClickListener = listener
     }
 

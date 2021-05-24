@@ -2,6 +2,7 @@ package com.example.afinal.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
@@ -15,12 +16,12 @@ data class Movie(
     val original_title: String,
     val overview: String,
     val popularity: Double,
+    @SerializedName("poster_path")
     val poster: String,
     val release_date: String,
     val title: String,
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int,
-
     val isFav : Boolean
 ): Serializable

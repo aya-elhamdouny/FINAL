@@ -29,6 +29,7 @@ class MovieViewModel(
 
 
     var pageNum = 1
+     var movieResponse : MovieResponse? = null
 
 
     fun getPopularMovie() = viewModelScope.launch {
@@ -54,11 +55,30 @@ class MovieViewModel(
     private fun handleMovieResponse(response: Response<MovieResponse>) : Resource<MovieResponse> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                pageNum++
+                if(movieResponse ==null){
+                    movieResponse = resultResponse
+                }else{
+                    val oldResponse = movieResponse?.movie
+                    val newResponse = resultResponse.movie
+                    oldResponse?.addAll(newResponse)
+
+                }
+                return Resource.Success(movieResponse?: resultResponse)
             }
         }
         return Resource.Error(response.message())
     }
+
+    fun saveMovie(movie: Movie)= viewModelScope.launch {
+        movieRepository.addMovietoDb(movie)
+    }
+
+    fun deletMovie(movie: Movie) = viewModelScope.launch {
+        movieRepository.deletMovie(movie)
+    }
+
+   fun getFavorite() = movieRepository.getFavorite()
 
 }
 
