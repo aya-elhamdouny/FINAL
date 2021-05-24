@@ -62,7 +62,6 @@ class MovieViewModel(
                     val oldResponse = movieResponse?.movie
                     val newResponse = resultResponse.movie
                     oldResponse?.addAll(newResponse)
-
                 }
                 return Resource.Success(movieResponse?: resultResponse)
             }

@@ -13,6 +13,7 @@ import com.example.afinal.R
 import com.example.afinal.models.Movie
 import com.example.afinal.ui.MainActivity
 import com.example.afinal.ui.MovieViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.coroutines.Job
 
@@ -24,15 +25,19 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         val movie = args.movie
+
         movie_poster.apply {
             Glide.with(this)
-                .load("https://image.tmdb.org/t/p/w1280$movie.poster")
+                .load("https://image.tmdb.org/t/p/w1280${movie.poster}")
                 .transform(CenterCrop())
+                .into(this)
+
                     }
         movie_backdrop.apply {
             Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w1280${movie.backdrop_path}")
                 .transform(CenterCrop())
+                .into(this)
         }
         movie_title.text = movie.title
         movie_overview.text = movie.overview
@@ -40,6 +45,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         fav_btn?.setOnClickListener() {
             viewModel.saveMovie(movie)
+            Snackbar.make(view , "movie added" , Snackbar.LENGTH_LONG).show()
         }
 
 
