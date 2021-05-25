@@ -48,24 +48,18 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             val bundle = Bundle().apply{
                 putSerializable("movie" , it) }
             findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToDetailFragment(it))
-            //findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToFavFragment(it))
-            }
 
+            }
 
         upcomingAdapter.setOnItemClickListener{
             val bundle = Bundle().apply{
                 putSerializable("movie" , it) }
-            findNavController().navigate(
-                R.id.action_movieFragment_to_detailFragment,
-                bundle
-            )}
+            findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToDetailFragment(it))}
+
         topratedAdapter.setOnItemClickListener{
             val bundle = Bundle().apply{
                 putSerializable("movie" , it) }
-            findNavController().navigate(
-                R.id.action_movieFragment_to_detailFragment,
-                bundle
-            )}
+            findNavController().navigate(MovieFragmentDirections.actionMovieFragmentToDetailFragment(it)) }
 
         fav_home_btn?.setOnClickListener {
             findNavController().navigate(R.id.favFragment)
@@ -77,6 +71,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         popularadapter.differ.submitList(movieResponse.movie)
+                        val totalPages = movieResponse.total_results / 42
+                        isLastPage = viewModel.popularpageNum == totalPages
                     }
                 }
                 is Resource.Error -> {
@@ -96,6 +92,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         topratedAdapter.differ.submitList(movieResponse.movie)
+                        val totalPages = movieResponse.total_results / 42
+                        isLastPage = viewModel.topRatedpageNum == totalPages
                     }
                 }
                 is Resource.Error -> {
@@ -115,6 +113,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         upcomingAdapter.differ.submitList(movieResponse.movie)
+                        val totalPages = movieResponse.total_results / 42
+                        isLastPage = viewModel.upComingpageNum == totalPages
                     }
                 }
                 is Resource.Error -> {
@@ -136,9 +136,12 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
 
     private  fun hideProgressBar(){
         paginationProgressBar.visibility= View.INVISIBLE
+        isLoading = false
     }
     private  fun showProgressBar(){
         paginationProgressBar.visibility= View.VISIBLE
+        isLoading = true
+
     }
 
     var isLoading = false
@@ -148,6 +151,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
     val popularscrollViewListner = object  : RecyclerView.OnScrollListener(){
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
+
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
             val firstVisableItem = layoutManager.findFirstVisibleItemPosition()
             val visableItemCount = layoutManager.childCount
@@ -155,10 +159,11 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
 
             val isNotLoadindAndNotScrolling = !isLoading && !isScrolling
             val isLastItem = firstVisableItem + visableItemCount >= totalItem
-            val isNotBeginning =firstVisableItem >=0
-            val isMore = totalItem >= 10
-            val paginate = isNotLoadindAndNotScrolling && isMore && isNotBeginning
-                    &&isLastItem&& isScrolling
+            val isNotBeginning = firstVisableItem >=0
+            val isMore = totalItem >= 40
+            val paginate = isNotLoadindAndNotScrolling &&isLastItem  && isNotBeginning
+                    && isMore
+                    && isScrolling
             if(paginate){
                 viewModel.getPopularMovie()
                 isScrolling = false
@@ -182,7 +187,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             val isNotLoadindAndNotScrolling = !isLoading && !isScrolling
             val isLastItem = firstVisableItem + visableItemCount >= totalItem
             val isNotBeginning =firstVisableItem >=0
-            val isMore = totalItem >= 10
+            val isMore = totalItem >= 40
             val paginate = isNotLoadindAndNotScrolling && isMore && isNotBeginning
                     &&isLastItem&& isScrolling
             if(paginate){
@@ -209,7 +214,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             val isNotLoadindAndNotScrolling = !isLoading && !isScrolling
             val isLastItem = firstVisableItem + visableItemCount >= totalItem
             val isNotBeginning =firstVisableItem >=0
-            val isMore = totalItem >= 10
+            val isMore = totalItem >= 40
             val paginate = isNotLoadindAndNotScrolling && isMore && isNotBeginning
                     &&isLastItem&& isScrolling
             if(paginate){
@@ -232,6 +237,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             adapter= popularadapter
             layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,
                 false)
+            addOnScrollListener(this@MovieFragment.popularscrollViewListner)
         }
 
 
@@ -242,6 +248,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             adapter= topratedAdapter
             layoutManager =  LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,
                 false)
+            addOnScrollListener(this@MovieFragment.topRatedrscrollViewListner)
         }
 
 
@@ -252,6 +259,8 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
             adapter= upcomingAdapter
             layoutManager =  LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,
                 false)
+            addOnScrollListener(this@MovieFragment.upComingrscrollViewListner)
+
         }
 
 

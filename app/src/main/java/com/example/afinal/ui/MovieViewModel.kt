@@ -15,6 +15,17 @@ class MovieViewModel(
 
 ) : ViewModel() {
 
+    init {
+
+        refreshDataFromNetwork()
+    }
+
+    private fun refreshDataFromNetwork() =
+        viewModelScope.launch {
+            movieRepository.refresh()
+        }
+   val movieList = movieRepository.movies
+
     val popularMovies: MutableLiveData<Resource<MovieResponse>> by lazy {
         MutableLiveData<Resource<MovieResponse>>().also {     getPopularMovie() }
     }
@@ -28,42 +39,78 @@ class MovieViewModel(
     }
 
 
-    var pageNum = 1
-     var movieResponse : MovieResponse? = null
+    var popularpageNum = 1
+    var topRatedpageNum = 1
+    var upComingpageNum = 1
+     var popularmovieResponse : MovieResponse? = null
+     var topRatedrmovieResponse : MovieResponse? = null
+     var upComingmovieResponse : MovieResponse? = null
 
 
     fun getPopularMovie() = viewModelScope.launch {
         popularMovies.postValue(Resource.Loading())
-        val popularMovieResponse = movieRepository.getPopularMovie(pageNum)
-        popularMovies.postValue(handleMovieResponse(popularMovieResponse))
+        val popularMovieResponse = movieRepository.getPopularMovie(popularpageNum)
+        popularMovies.postValue(handlePopularMovieResponse(popularMovieResponse))
     }
 
 
     fun getTopRatedMovie() = viewModelScope.launch {
         topRatedMovies.postValue(Resource.Loading())
-        val topRatedMovieResponse = movieRepository.getTopRatedMovie(pageNum)
-        topRatedMovies.postValue(handleMovieResponse(topRatedMovieResponse))
+        val topRatedMovieResponse = movieRepository.getTopRatedMovie(topRatedpageNum)
+        topRatedMovies.postValue(handletopRatedMovieResponse(topRatedMovieResponse))
     }
 
 
     fun getUpComingMovie() = viewModelScope.launch {
         upComingMovies.postValue(Resource.Loading())
-        val upComingMovieResponse = movieRepository.getUpComingrMovie(pageNum)
-        upComingMovies.postValue(handleMovieResponse(upComingMovieResponse))
+        val upComingMovieResponse = movieRepository.getUpComingrMovie(upComingpageNum)
+        upComingMovies.postValue(handleupComingMovieResponse(upComingMovieResponse))
     }
 
-    private fun handleMovieResponse(response: Response<MovieResponse>) : Resource<MovieResponse> {
+    private fun handlePopularMovieResponse(response: Response<MovieResponse>) : Resource<MovieResponse> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                pageNum++
-                if(movieResponse ==null){
-                    movieResponse = resultResponse
+                popularpageNum++
+                if(popularmovieResponse ==null){
+                    popularmovieResponse = resultResponse
                 }else{
-                    val oldResponse = movieResponse?.movie
+                    val oldResponse = popularmovieResponse?.movie
                     val newResponse = resultResponse.movie
                     oldResponse?.addAll(newResponse)
                 }
-                return Resource.Success(movieResponse?: resultResponse)
+                return Resource.Success(popularmovieResponse?: resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handletopRatedMovieResponse(response: Response<MovieResponse>) : Resource<MovieResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                topRatedpageNum++
+                if(topRatedrmovieResponse ==null){
+                    topRatedrmovieResponse = resultResponse
+                }else{
+                    val oldResponse = topRatedrmovieResponse?.movie
+                    val newResponse = resultResponse.movie
+                    oldResponse?.addAll(newResponse)
+                }
+                return Resource.Success(topRatedrmovieResponse?: resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleupComingMovieResponse(response: Response<MovieResponse>) : Resource<MovieResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                upComingpageNum++
+                if( upComingmovieResponse==null){
+                    upComingmovieResponse = resultResponse
+                }else{
+                    val oldResponse = upComingmovieResponse?.movie
+                    val newResponse = resultResponse.movie
+                    oldResponse?.addAll(newResponse)
+                }
+                return Resource.Success(upComingmovieResponse?: resultResponse)
             }
         }
         return Resource.Error(response.message())

@@ -3,19 +3,16 @@ package com.example.afinal.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgs
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.example.afinal.R
-import com.example.afinal.models.Movie
 import com.example.afinal.ui.MainActivity
 import com.example.afinal.ui.MovieViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.coroutines.Job
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
     lateinit var  viewModel : MovieViewModel
@@ -25,6 +22,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         val movie = args.movie
+
+        backbtn?.setOnClickListener {
+            findNavController().navigate(R.id.movieFragment)
+        }
 
         movie_poster.apply {
             Glide.with(this)

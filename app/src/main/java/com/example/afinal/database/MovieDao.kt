@@ -15,6 +15,7 @@ interface MovieDao {
     @Query("select * from Movie")
     fun getMovies() : LiveData<List<Movie>>
 
+
     @Delete
     suspend fun deleteMovie(movie: Movie)
 

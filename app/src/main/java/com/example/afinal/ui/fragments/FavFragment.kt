@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_movie.*
 class FavFragment : Fragment(R.layout.fragment_fav) {
     lateinit var viewModel: MovieViewModel
     lateinit var madapter: MovieAdapter
-    val args : DetailFragmentArgs by navArgs()
+    val args : FavFragmentDirections by navArgs()
 
 
 
@@ -29,17 +29,17 @@ class FavFragment : Fragment(R.layout.fragment_fav) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setFavMovieRecyclerView()
-        val movie = args.movie
+        //val movie = args.movie
         madapter.setOnItemClickListener{
             val bundle = Bundle().apply{
                 putSerializable("movie" , it) }
-            findNavController().navigate( MovieFragmentDirections.actionMovieFragmentToFavFragment(it)
+            findNavController().navigate( FavFragmentDirections.actionFavFragmentToDetailFragment(it)
             )
         }
 
 
 
-        backbtn?.setOnClickListener {
+        back_btn?.setOnClickListener {
             findNavController().navigate(R.id.movieFragment)
         }
 
