@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".ui.fragments.MovieFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
+
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/MOVIES"
+                android:backgroundTint="#f5c518"
                 android:textColor="@color/black"
                 android:textSize="50sp" />
 
@@ -108,9 +108,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
+      </LinearLayout>
 
-
-    </LinearLayout>
 
 
 

@@ -2,20 +2,19 @@ package com.example.afinal.api
 
 import com.example.afinal.models.Movie
 import com.example.afinal.models.MovieResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiInterface {
 
-
-
-
     @GET("movie/popular")
     suspend  fun getPopularMovies(
         @Query("api_key") apiKey: String = "bf70bd0d200feb5b6281cd46a3bb40d2",
         @Query("page") page: Int=1
     ): Response<MovieResponse>
+
 
 
 

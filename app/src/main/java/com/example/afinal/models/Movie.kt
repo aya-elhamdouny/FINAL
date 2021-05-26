@@ -2,7 +2,6 @@ package com.example.afinal.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import com.example.afinal.domain.Model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -18,7 +17,7 @@ data class Movie constructor(
     val release_date: String,
     val title: String,
     val video: Boolean,
-    val isFav: Boolean
+    val isFav: Int
 ): Serializable
 
 fun List<Movie>.asDomainModel(): List<Model> {

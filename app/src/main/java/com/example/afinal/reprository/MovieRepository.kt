@@ -23,35 +23,44 @@ class MovieRepository( val database: MovieDatabase){
     suspend fun getUpComingrMovie(pageNum : Int) =
     RetrofitBuilder.api.getUpcomingMovies(page = pageNum)
 
-    suspend fun addMovietoDb(movie: Movie)= database.MovieDao().insert(movie)
+    suspend fun addMovietoDb(movie: Movie)= database.MovieDao.insert(movie)
 
-   suspend fun deletMovie(movie: Movie) = database.MovieDao().deleteMovie(movie)
+   suspend fun deletMovie(movie: Movie) = database.MovieDao.deleteMovie(movie)
 
-    fun getFavorite() =database.MovieDao().getMovies()
+    fun getFavorite() =database.MovieDao.getFav()
+
 
 
 
     //caching
 
-    val movies: LiveData<List<Model>> =
-        Transformations.map(database.MovieDao().getMovies()){
+/*
+    val databasemovies: LiveData<List<Model>> =
+        Transformations.map(database.MovieDao.getMovies()){
+            it.asDomainModel()
+        }
+    val favMovie :LiveData<List<Model>> =
+        Transformations.map(database.MovieDao.getFav()){
             it.asDomainModel()
         }
 
-
     suspend fun refresh(){
         withContext(Dispatchers.IO){
-         //   val moveList = RetrofitBuilder.api.getPopularMovies().await()
-         //   database.MovieDao().insert(moveList.asDatabasemodel())
+           val popularmovieList = RetrofitBuilder.api.getPopularMovies().body()?.movie?.toList()
+            val upcomingMovieList = RetrofitBuilder.api.getUpcomingMovies().body()?.movie?.toList()
+            val topRatedMovieList = RetrofitBuilder.api.getTopRatedMovies().body()?.movie?.toList()
+            if (popularmovieList != null) {
+                database.MovieDao.insertAllMovies(popularmovieList)
+            }
+            if (upcomingMovieList != null) {
+                database.MovieDao.insertAllMovies(upcomingMovieList)
+            }
+            if (topRatedMovieList != null) {
+                database.MovieDao.insertAllMovies(topRatedMovieList)
+            }
         }
     }
-
-
-
-
-
-
-
+*/
 
 
 

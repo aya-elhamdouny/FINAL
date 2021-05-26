@@ -8,15 +8,19 @@ import org.jetbrains.annotations.NotNull
 @Dao
 interface MovieDao {
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(movie : Movie)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllMovies(movie : List<Movie>)
 
     @Query("select * from Movie")
     fun getMovies() : LiveData<List<Movie>>
 
-
     @Delete
     suspend fun deleteMovie(movie: Movie)
+
+    @Query("select * from Movie where isFav=1")
+      fun getFav() : LiveData<List<Movie>>
 
 }
