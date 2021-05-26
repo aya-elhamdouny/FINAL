@@ -73,7 +73,7 @@
                 android:id="@+id/fav_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
+                android:background="@null"
                 android:src="@drawable/ic_baseline_favorite_detail" />
 
         </androidx.cardview.widget.CardView>
@@ -88,26 +88,75 @@
 
         <TextView
             android:id="@+id/movie_title"
+            android:text="Movie name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
             app:layout_constraintTop_toBottomOf="@+id/backdrop_guideline" />
 
+
+        <ImageView
+            android:id="@+id/date_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_date_range_24"
+            app:layout_constraintStart_toStartOf="@+id/movie_title"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title"/>
+
+
+
         <TextView
             android:id="@+id/movie_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="2021-04-07"
+            android:paddingRight="10dp"
             android:textColor="#757575"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/movie_title"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@+id/date_icon"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
+
+
+        <ImageView
+            android:id="@+id/rate_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_stars_24"
+            app:layout_constraintStart_toEndOf="@id/movie_release_date"
+            app:layout_constraintTop_toBottomOf="@id/movie_title"
+            />
+
+        <TextView
+            android:id="@+id/movie_rating"
+            android:text="20%"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#757575"
+            android:textSize="15sp"
+            app:layout_constraintStart_toEndOf="@id/rate_icon"
+            app:layout_constraintTop_toBottomOf="@id/movie_title"/>
+
+        <Button
+            android:id="@+id/trailer_btn"
+            android:layout_width="99dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="40dp"
+            android:width="20dp"
+            android:height="20dp"
+            android:background="@drawable/corner_style"
+            android:text="Trailes"
+            app:layout_constraintBottom_toTopOf="@+id/movie_poster_title_barrier"
+            app:layout_constraintEnd_toEndOf="@+id/movie_poster_card"
+            app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
+            app:layout_constraintTop_toBottomOf="@+id/movie_poster_card" />
+
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/movie_poster_title_barrier"
@@ -118,24 +167,16 @@
 
         <TextView
             android:id="@+id/movie_overview"
+            android:text="he world is stunned when a group of time travelers arrive from the year 2051 to deliver an urgent message: Thirty years in the future mankind is losing a global war against a deadly alien species. The only hope for survival is for soldiers and civilians from the present to be transported to the future and join the fight. Among those recruited is high school teacher and family man Dan Forester (Chris Pratt)."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_poster_title_barrier" />
 
 
-        <RatingBar
-            android:id="@+id/movie_rating"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/movie_poster_card"
-            app:layout_constraintStart_toStartOf="@+id/movie_poster_card"
-            app:layout_constraintTop_toBottomOf="@+id/movie_poster_card" />
 
 
         <ProgressBar

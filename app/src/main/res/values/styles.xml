@@ -7,7 +7,8 @@
 
     <style name="customRatingBar"
         parent="android:style/Widget.Material.RatingBar.Small">
-
     </style>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight"> </style>
 
 </resources>
