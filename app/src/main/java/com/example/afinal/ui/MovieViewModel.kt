@@ -7,24 +7,16 @@ import com.example.afinal.Util.Resource
 import com.example.afinal.models.Movie
 import com.example.afinal.models.MovieResponse
 import com.example.afinal.reprository.MovieRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class MovieViewModel(
+abstract class MovieViewModel(
     val movieRepository: MovieRepository
+
 ) : ViewModel() {
 
-    /*init { refreshDataFromNetwork() }
 
-    private fun refreshDataFromNetwork() =
-        viewModelScope.launch {
-            movieRepository.refresh()
-        }
 
-   val movieList = movieRepository.databasemovies
-*/
     val popularMovies: MutableLiveData<Resource<MovieResponse>> by lazy {
         MutableLiveData<Resource<MovieResponse>>().also {     getPopularMovie() }
     }
@@ -38,13 +30,14 @@ class MovieViewModel(
     }
 
 
-     var popularpageNum = 1
-     var topRatedpageNum = 1
-     var upComingpageNum = 1
+
+    var popularpageNum = 1
+    var topRatedpageNum = 1
+    var upComingpageNum = 1
      var popularmovieResponse : MovieResponse? = null
      var topRatedrmovieResponse : MovieResponse? = null
      var upComingmovieResponse : MovieResponse? = null
-     var  isOnline : Boolean = false
+
 
 
 
@@ -119,7 +112,7 @@ class MovieViewModel(
     }
 
     fun saveMovie(movie: Movie)= viewModelScope.launch {
-            movieRepository.addMovietoDb(movie)
+        movieRepository.addMovietoDb(movie)
     }
 
     fun deletMovie(movie: Movie) = viewModelScope.launch {
@@ -127,6 +120,14 @@ class MovieViewModel(
     }
 
    fun getFavorite() = movieRepository.getFavorite()
+
+     fun addCacheMovie(movies : List<Movie>) = viewModelScope.launch {
+         movieRepository.addCacheMovie(movies)
+     }
+
+    fun getCachedMovies() = movieRepository.getCachedMovie()
+
+
 
 }
 

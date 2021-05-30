@@ -71,6 +71,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         popularadapter.differ.submitList(movieResponse.movie)
+                        viewModel.addCacheMovie(movieResponse.movie)
                         val totalPages = movieResponse.total_results / 42
                         isLastPage = viewModel.popularpageNum == totalPages
                     }
@@ -92,6 +93,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         topratedAdapter.differ.submitList(movieResponse.movie)
+                        viewModel.addCacheMovie(movieResponse.movie)
                         val totalPages = movieResponse.total_results / 42
                         isLastPage = viewModel.topRatedpageNum == totalPages
                     }
@@ -113,6 +115,7 @@ class MovieFragment : Fragment(R.layout.fragment_movie) {
                     hideProgressBar()
                     response.data?.let { movieResponse ->
                         upcomingAdapter.differ.submitList(movieResponse.movie)
+                        viewModel.addCacheMovie(movieResponse.movie)
                         val totalPages = movieResponse.total_results / 42
                         isLastPage = viewModel.upComingpageNum == totalPages
                     }

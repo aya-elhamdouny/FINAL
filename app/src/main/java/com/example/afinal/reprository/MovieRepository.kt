@@ -1,5 +1,6 @@
 package com.example.afinal.reprository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.afinal.api.RetrofitBuilder
@@ -15,52 +16,53 @@ import retrofit2.Response
 class MovieRepository( val database: MovieDatabase){
 
     suspend fun getPopularMovie(pageNum : Int) =
-         RetrofitBuilder.api.getPopularMovies(page = pageNum)
+        RetrofitBuilder.api.getPopularMovies(page = pageNum)
+
 
     suspend fun getTopRatedMovie(pageNum : Int) =
-         RetrofitBuilder.api.getTopRatedMovies(page = pageNum)
+        RetrofitBuilder.api.getTopRatedMovies(page = pageNum)
+
 
     suspend fun getUpComingrMovie(pageNum : Int) =
-    RetrofitBuilder.api.getUpcomingMovies(page = pageNum)
+         RetrofitBuilder.api.getUpcomingMovies(page = pageNum)
+
+
+
+
+
 
     suspend fun addMovietoDb(movie: Movie)= database.MovieDao.insert(movie)
 
    suspend fun deletMovie(movie: Movie) = database.MovieDao.deleteMovie(movie)
 
-    fun getFavorite() =database.MovieDao.getFav()
+    fun getFavorite() =database.MovieDao.getMovies()
+
+    suspend fun addCacheMovie(movies :List<Movie>) = database.MovieDao.cacheResponse(movies)
+     fun getCachedMovie() = database.MovieDao.getCachedMovies()
 
 
 
+    /*//caching
 
-    //caching
-
-/*
-    val databasemovies: LiveData<List<Model>> =
-        Transformations.map(database.MovieDao.getMovies()){
+    val movies: LiveData<List<Model>> =
+        Transformations.map(database.MovieDao().getMovies()){
             it.asDomainModel()
         }
-    val favMovie :LiveData<List<Model>> =
-        Transformations.map(database.MovieDao.getFav()){
-            it.asDomainModel()
-        }
+
 
     suspend fun refresh(){
         withContext(Dispatchers.IO){
-           val popularmovieList = RetrofitBuilder.api.getPopularMovies().body()?.movie?.toList()
-            val upcomingMovieList = RetrofitBuilder.api.getUpcomingMovies().body()?.movie?.toList()
-            val topRatedMovieList = RetrofitBuilder.api.getTopRatedMovies().body()?.movie?.toList()
-            if (popularmovieList != null) {
-                database.MovieDao.insertAllMovies(popularmovieList)
-            }
-            if (upcomingMovieList != null) {
-                database.MovieDao.insertAllMovies(upcomingMovieList)
-            }
-            if (topRatedMovieList != null) {
-                database.MovieDao.insertAllMovies(topRatedMovieList)
-            }
+         //   val moveList = RetrofitBuilder.api.getPopularMovies().await()
+         //   database.MovieDao().insert(moveList.asDatabasemodel())
         }
-    }
-*/
+    }*/
+
+
+
+
+
+
+
 
 
 

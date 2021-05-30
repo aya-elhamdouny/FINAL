@@ -14,10 +14,19 @@ import com.example.afinal.ui.fragments.MovieFragment
 
 abstract class MovieDatabase : RoomDatabase(){
 
-    abstract var MovieDao : MovieDao
+
+
+    abstract val  MovieDao : MovieDao
+
+
+
+
     companion object{
         @Volatile
         private lateinit var INSTANCE: MovieDatabase
+
+
+
 
          fun getDatabase(context: Context): MovieDatabase {
             synchronized(MovieDatabase::class.java) {

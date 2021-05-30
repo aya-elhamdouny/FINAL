@@ -37,9 +37,10 @@ class FavFragment : Fragment(R.layout.fragment_fav) {
             )
         }
 
+
+
         back_btn?.setOnClickListener {
             findNavController().navigate(R.id.movieFragment)
-
         }
 
         viewModel.getFavorite().observe(viewLifecycleOwner, Observer { movies ->

@@ -34,7 +34,7 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="90dp"
-                android:background="#null"
+                android:background="#000FFFFF"
                 android:src="@drawable/ic_baseline_favorite_24" />
         </LinearLayout>
 
